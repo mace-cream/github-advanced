@@ -10,6 +10,8 @@
 \usepackage{multirow}
 \usepackage{float}
 \usepackage{color}
+\usepackage{listings}
+\input{code_style.tex}
 %\usepackage[font=Helv,timeinterval=3]{tdclock}
 \setbeamertemplate{theorems}[numbered]
 \DeclareMathOperator*{\rgmax}{argmax}
@@ -50,7 +52,7 @@
 \date{\hspace{1mm} \timemark}
 \include{presentation_first_part}
 \include{presentation_generalized_continued_fraction}
-\section{小结}
+\section{GitHub 中的个人与组织}
 \begin{frame}{GitHub 个人主页}
 \begin{itemize}
 	\item \url{https://github.com/your_github_id}
@@ -78,7 +80,20 @@
 	\item 接收邀请后，选择自己的可见性: \textbf{公开}或\textbf{仅内部成员可见}。
 \end{itemize}
 \end{frame}
-\begin{frame}{merge 中正确解决 conflict}
+\begin{frame}[noframenumbering]{如何倒退}
+\begin{itemize}
+	\item 前提： 经常 commit
+	\item 倒退命令
+	\begin{enumerate}
+		\item [可选]暂存当前修改: \textt{git checkout -b bad\_code}
+		\item 回退到想要的地方: \texttt{git reset commit\_hash}
+	\end{enumerate}
+	\item 
+\end{itemize}
+\end{frame}
+\section{实例分析}
+\subsection{merge 中正确解决 conflict}
+\begin{frame}[fragile]{merge 中正确解决 conflict}
 \begin{itemize}
 \item 两个不同的 commit 对同一行代码改动产生了冲突
      \begin{figure}
@@ -87,124 +102,50 @@
 	\end{figure}
 \item 冲突复现
 \end{itemize}
-     \begin{figure}
-          \centering
-          %\includegraphics[height=4cm]{cooperative_single_temporal.eps}
-          \caption*{时间协作定位图示}
-     \end{figure}
-\end{frame}
-\appendix
-\begin{frame}[noframenumbering]
-直接求解该问题需要如下两个引理:
-\begin{lemma}\label{lemma:change}
-设L是$m\times n$的矩阵，$a,\epsilon > 0$则
-\begin{equation*}
-|a\bm{I}_m+\epsilon \bm{L}\bm{L}^{\textrm{T}}|=a^m|\bm{I}_n+\frac{\epsilon}{a} \bm{L}^{\textrm{T}}\bm{L}|
-\end{equation*}
-\end{lemma}
-\begin{proof}
-不妨设$a=\epsilon=1$,
-考虑到
-\[
-\left(\begin{array}{cc}
-\bm{I}_n+\bm{L}^{\textrm{T}}\bm{L}&\bm{0}\\
-\bm{L}&\bm{I}_m\\
-\end{array}\right)\sim\left(\begin{array}{cc}
-\bm{I}_n&-\bm{L}^{\textrm{T}}\\
-\bm{L}&\bm{I}_m\\
-\end{array}\right)\sim\left(\begin{array}{cc}
-\bm{I}_n&-\bm{L}^{\textrm{T}}\\
-0&\bm{I}_m+\bm{L}\bm{L}^{\textrm{T}}\\
-\end{array}\right)
-\]
-其中$\sim$表示矩阵相抵，两边取行列式即得$|\bm{I}_m+\bm{L}\bm{L}^{\textrm{T}}|=|\bm{I}_n+\bm{L}^{\textrm{T}}\bm{L}|$。
-\end{proof}
-\end{frame}
-\begin{frame}[noframenumbering]
-\begin{lemma}\label{lemma:special}
-$\bm{S}_{n-1}$是一个n-1维的方阵，
-$\bm{S}=\left(
-\begin{array}{cccc}
-0&1&\dots&0\\
-1&0&\dots&0\\
-\vdots&\vdots&\ddots&\vdots\\
-0&\dots&1&0\\
-\end{array}\right).$
-则$\bm{S}_{n-1}$的n-1个特征值为:
-$\lambda_j=2\cos(\frac{\pi j}{n}),j=1,2,...,n-1$
-\end{lemma}
-\begin{proof}
-\begin{enumerate}
-  \item 用数学归纳法证明$S_n$的特征多项式有递推公式$P_n(\lambda)=\lambda P_{n-1}(\lambda)-P_{n-2}(\lambda)$
-  \item $U_n(\lambda)=\frac{1}{\sqrt{1-(\frac{\lambda}{2})^2}}\sin((n+1)\arccos(\frac{\lambda}{2}))$适合上面的递推关系式。
-  \item $U_1(\lambda),U_2(\lambda)$是多项式,所以$U_n(\lambda)$是关于$\lambda$的多项式
-\end{enumerate}
-\end{proof}
-\end{frame}
-\begin{frame}[noframenumbering]{如何倒退}
-不妨设节点沿x轴运动,费舍尔信息矩阵$I(\bm{P})$化简为:
-\begin{equation*}
-I(\bm{P})=a\bm{I}+b \left(
-\begin{array}{ccccc}
-\bm{e}_1\bm{e}_1^{\textrm{T}}&-\bm{e}_1\bm{e}_1^{\textrm{T}}&\dots&&0\\
--\bm{e}_1\bm{e}_1^{\textrm{T}}&2\bm{e}_1\bm{e}_1^{\textrm{T}}&-\bm{e}_1\bm{e}_1^{\textrm{T}}&\dots&0\\
-\vdots &\vdots&&\ddots &\vdots\\
-0&&\dots&-\bm{e}_1\bm{e}_1^{\textrm{T}}&\bm{e}_1\bm{e}_1^{\textrm{T}}\\
-\end{array}
-\right)
-\end{equation*}
-其中$\bm{e}_1=\binom{1}{0}$
-\end{frame}
-\begin{frame}[noframenumbering]
-$I(\bm{P})=a\bm{I}+b \bm{L}\bm{L}^{\textrm{T}}$,其中\\
+\begin{lstlisting}[language=bash]
+git clone https://github.com/wuhan2020/\
+wuhan2020-frontend-react-app.git
+git checkout 801a4e3 -b feature
+git checkout 9d11a11 -b main
+git merge feature
+\end{lstlisting}
 
-\bigskip
-$\bm{e}_1=\binom{1}{0}$且
-$\bm{L}=\left(\begin{array}{ccccc}
-\bm{e}_1&0&\dots&&0\\
--\bm{e}_1&\bm{e}_1&0&\dots&0\\
-\vdots &\vdots&&\ddots &\vdots\\
-0&&\dots&-\bm{e}_1&0\\
-\end{array}
-\right)_{2n\times n}$
-\bigskip
+\end{frame}
+\begin{frame}{冲突现象}
 
-$\bm{L}$的最后一列全为零。
+\begin{figure}
+	\centering
+	\includegraphics[height=6cm]{phenomenon.png}
+\end{figure}
 \end{frame}
-\begin{frame}[noframenumbering]{$I(\bm{P})=a\bm{I}+b \bm{L}\bm{L}^{\textrm{T}}$}
-$\bm{I}(\bm{P})$的特征多项式为$|(\lambda-a)\bm{I}-b\bm{L}\bm{L}^{\textrm{T}}|$
-\pause
+\begin{frame}{冲突原因}
+\begin{figure}
+	\centering
+	\includegraphics[height=7cm]{deps.png}
+\end{figure}
+\end{frame}
+\begin{frame}{如何解决}
+\begin{itemize}
+	\item 使用 IDE 工具选择接受哪一部分的改动
+\end{itemize}
+\begin{figure}
+	\includegraphics[height=2.5cm]{accept_incoming.png}
+\end{figure}
 
-根据引理(\ref{lemma:change}),$|(\lambda-a)\bm{I}-bLL^{\textrm{T}}|=(\lambda-a)^{2n}|\bm{I}_n-\frac{b}{\lambda-a}L^{\textrm{T}}L|$
-\[L^{\textrm{T}}L=\left(
-\begin{array}{ccccc}
-2&-1&\dots&&0\\
--1&2&-1&\dots&0\\
-0&-1&2&\dots&0\\
-\vdots &\vdots&&\ddots &\vdots\\
-0&\dots&&0&0\\
-\end{array}
-\right).
-\]
-\pause
-设$\bm{K}_{n-1}$为$L^{\textrm{T}}L$第n-1阶主子式，则
-$|(\lambda-a)\bm{I}-bLL^{\textrm{T}}|=(\lambda-a)^{n+1}|(\lambda-a)\bm{I}_{n-1}-b\bm{K}_{n-1}|$
 \end{frame}
-\begin{frame}[noframenumbering]
-$\bm{K}_{n-1}=2\bm{I}_{n-1}-\bm{S}$,由引理(\ref{lemma:special})可求出$\bm{K}_{n-1}$的全部特征值。
-\pause
-\[
-f(n):=\frac{\tr(\bm{I}(\bm{P})^{-1})}{n}=\frac{1}{n}\left(\frac{n+1}{a}+\sum_{j=1}^{n-1}\frac{1}{a+2b(1-\cos(\frac{\pi j}{n}))}\right)
-\]
-当$n\to \infty$,根据Riemann积分的定义:
-\[
-\lim_{n\rightarrow \infty}f(n)=\frac{1}{a}+\int_0^1 \frac{1}{a+2b(1-\cos(\pi x))}dx
-\]
-化为复积分由留数定理可得
-\[
-\lim_{n\rightarrow \infty}f(n)=\frac{1}{a}+\frac{1}{\sqrt{a^2+4ab}}.
-\]
+\begin{frame}{最终效果}
+\begin{figure}
+\includegraphics[height=2.5cm]{recover_changes.png}
+\caption{复现效果}
+\end{figure}
+feature 分支仅贡献一处改动
+\begin{figure}
+	\includegraphics[height=2.5cm]{original.png}
+	\caption{原有效果}
+\end{figure}
 \end{frame}
+
+
 \begin{frame}[noframenumbering]{如何使用 tag}
 提取公因子后，下面用连分式法研究$\bm{I}(\bm{P})=\lambda \bm{I}+\bm{J}$的结构。
 \pause
