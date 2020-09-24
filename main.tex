@@ -10,6 +10,7 @@
 \usepackage{multirow}
 \usepackage{float}
 \usepackage{color}
+
 \usepackage{listings}
 \input{code_style.tex}
 %\usepackage[font=Helv,timeinterval=3]{tdclock}
@@ -102,7 +103,7 @@
 \end{frame}
 \section{实例分析}
 \frame{\tableofcontents[currentsection]}
-\begin{frame}[fragile]{merge 中正确解决 conflict}
+\begin{frame}[fragile]{merge 过程中正确解决 conflict}
 \begin{itemize}
 \item 两个不同的 commit 对同一行代码改动产生了冲突
      \begin{figure}
@@ -111,14 +112,13 @@
 	\end{figure}
 \item 冲突复现
 \end{itemize}
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,xleftmargin=.1\textwidth]
 git clone https://github.com/wuhan2020/\
 wuhan2020-frontend-react-app.git
 git checkout 801a4e3 -b feature
 git checkout 9d11a11 -b main
 git merge feature
 \end{lstlisting}
-
 \end{frame}
 \begin{frame}{冲突现象}
 
